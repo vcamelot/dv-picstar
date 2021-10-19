@@ -20,7 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::group(['prefix' => 'employees'], function () {
+    Route::get('/', [EmployeeController::class, 'index']);
+    Route::get('search', [EmployeeController::class, 'search']);
+    Route::get('{id}', [EmployeeController::class, 'show']);
+    Route::get('{id}/children', [EmployeeController::class, 'children']);
 
-Route::apiResource('employees', EmployeeController::class);
-Route::apiResource('employees.associates',
-    EmployeeAssociateController::class)->only(['index']);
+});
