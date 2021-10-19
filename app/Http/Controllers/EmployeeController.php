@@ -49,6 +49,13 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse($employee, 'Employee updated', 200);
     }
 
+    public function destroy(Employee $employee)
+    {
+        $employee->delete();
+
+        return $this->SuccessResponse([], 'Deleted', 204);
+    }
+
     public function children($id): JsonResponse
     {
         $employee = Employee::find($id);
