@@ -9,9 +9,16 @@ use App\Models\Employee;
 use App\Classes\Positions;
 use App\Http\Requests\EmployeeCreateOrUpdateRequest as PostRequest;
 
+/**
+ * Class EmployeeController
+ * @package App\Http\Controllers
+ */
 class EmployeeController extends BaseController
 {
 
+    /**
+     * @return JsonResponse
+     */
     public function index(): JsonResponse
     {
         $employees = Employee::all();
@@ -19,6 +26,10 @@ class EmployeeController extends BaseController
     }
 
 
+    /**
+     * @param $id
+     * @return JsonResponse
+     */
     public function show($id): JsonResponse
     {
         $employee = Employee::find($id);
@@ -29,6 +40,10 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse(new EmployeeResource($employee));
     }
 
+    /**
+     * @param PostRequest $request
+     * @return JsonResponse
+     */
     public function store(PostRequest $request): JsonResponse
     {
         $employee = Employee::create($this->prepareEmployeeColumns($request));
@@ -36,6 +51,11 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse($employee, 'Employee created', 201);
     }
 
+    /**
+     * @param $id
+     * @param PostRequest $request
+     * @return JsonResponse
+     */
     public function update($id, PostRequest $request): JsonResponse
     {
         $employee = Employee::find($id);
@@ -49,6 +69,10 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse($employee, 'Employee updated', 200);
     }
 
+    /**
+     * @param Employee $employee
+     * @return JsonResponse
+     */
     public function destroy(Employee $employee)
     {
         $employee->delete();
@@ -56,6 +80,12 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse([], 'Deleted', 204);
     }
 
+    /**
+     * Show all subsidiaries of an employee at managing position
+     *
+     * @param $id
+     * @return JsonResponse
+     */
     public function children($id): JsonResponse
     {
         $employee = Employee::find($id);
@@ -71,6 +101,12 @@ class EmployeeController extends BaseController
 
     }
 
+    /**
+     * Find all employees at given position
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function search(Request $request): JsonResponse
     {
         $data = $request->all();
@@ -88,6 +124,12 @@ class EmployeeController extends BaseController
         return $this->SuccessResponse($employees);
     }
 
+    /**
+     * Generate list of columns from request for creating or updating an employee
+     *
+     * @param Request $request
+     * @return array
+     */
     private function prepareEmployeeColumns(Request $request): array
     {
         $columns = [
@@ -101,6 +143,5 @@ class EmployeeController extends BaseController
         }
 
         return $columns;
-
     }
 }
