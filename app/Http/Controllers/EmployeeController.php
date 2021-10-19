@@ -9,6 +9,13 @@ use App\Models\Employee;
 
 class EmployeeController extends BaseController
 {
+
+    public function index(): JsonResponse {
+        $employees = Employee::all();
+        return $this->SuccessResponse(EmployeeResource::collection($employees));
+    }
+
+
     public function show($id): JsonResponse
     {
         $employee = Employee::find($id);

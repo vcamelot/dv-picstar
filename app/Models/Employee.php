@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
-    
+
     public function manager() {
         return $this->hasOne(Employee::class, 'id', 'superior_id');
     }
