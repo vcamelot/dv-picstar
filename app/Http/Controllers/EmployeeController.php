@@ -6,6 +6,7 @@ use App\Http\Resources\EmployeeResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Employee;
+use App\Classes\Positions;
 
 class EmployeeController extends BaseController
 {
@@ -24,5 +25,8 @@ class EmployeeController extends BaseController
         }
 
         return $this->SuccessResponse(new EmployeeResource($employee));
+    }
+
+    public function children($id): JsonResponse {
     }
 }
