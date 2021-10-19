@@ -4,10 +4,11 @@ copy-files:
 	cp .env.example .env
 
 build:
-	docker-compose up -d --force-recreate --build
+	docker-compose up -d --build
 
 post-install:
-	docker-compose run --rm app composer run-script post-autoload-dump
+	docker-compose exec app composer update
+	docker-compose exec app composer run-script post-autoload-dump
 	docker-compose exec app php artisan key:generate
 
 seed:
