@@ -25,5 +25,7 @@ Route::group(['prefix' => 'employees'], function () {
     Route::get('search', [EmployeeController::class, 'search']);
     Route::get('{id}', [EmployeeController::class, 'show']);
     Route::get('{id}/children', [EmployeeController::class, 'children']);
+    Route::post('create', [EmployeeController::class, 'store']);
+    Route::put('{id}', [EmployeeController::class, 'update']);
 
 });

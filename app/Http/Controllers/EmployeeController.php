@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Classes\Positions;
+use App\Http\Requests\EmployeeCreateOrUpdateRequest as PostRequest;
 
 class EmployeeController extends BaseController
 {
@@ -26,6 +27,26 @@ class EmployeeController extends BaseController
         }
 
         return $this->SuccessResponse(new EmployeeResource($employee));
+    }
+
+    public function store(PostRequest $request): JsonResponse
+    {
+        $employee = Employee::create($this->prepareEmployeeColumns($request));
+
+        return $this->SuccessResponse($employee, 'Employee created', 201);
+    }
+
+    public function update($id, PostRequest $request): JsonResponse
+    {
+        $employee = Employee::find($id);
+        if (is_null($employee)) {
+            return $this->ErrorResponse([], 'Employee not found');
+        }
+
+        $employee->update($this->prepareEmployeeColumns($request));
+        $employee->save();
+
+        return $this->SuccessResponse($employee, 'Employee updated', 200);
     }
 
     public function children($id): JsonResponse
@@ -58,5 +79,21 @@ class EmployeeController extends BaseController
         }
 
         return $this->SuccessResponse($employees);
+    }
+
+    private function prepareEmployeeColumns(Request $request): array
+    {
+        $columns = [
+            'name' => $request['name'],
+            'position' => $request['position'],
+            'superior_id' => $request['superior_id'],
+            'start_date' => $request['start_date']
+        ];
+        if (isset($request['end_date'])) {
+            $columns['end_date'] = $request['end_date'];
+        }
+
+        return $columns;
+
     }
 }
