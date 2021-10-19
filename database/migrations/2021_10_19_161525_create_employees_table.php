@@ -16,8 +16,8 @@ class CreateEmployeesTable extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('position', ['manager', 'non-manager']);
-            $table->integer('superior')->nullable();
+            $table->enum('position', ['manager', 'associate']);
+            $table->integer('superior_id')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timestamps();

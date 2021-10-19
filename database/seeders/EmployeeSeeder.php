@@ -6,6 +6,7 @@ use App\Models\Employee;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class EmployeeSeeder extends Seeder
 {
@@ -22,9 +23,11 @@ class EmployeeSeeder extends Seeder
             DB::table('employees')->insert([
                 'name' => $faker->name,
                 'position' => 'manager',
-                'superior' => null,
+                'superior_id' => null,
                 'start_date' => $faker->dateTimeBetween('-10 years', '-5 year'),
-                'end_date' => random_int(0, 1) == 1 ? $faker->dateTimeBetween('-2 years', '-1 month') : null
+                'end_date' => random_int(0, 1) == 1 ?
+                    $faker->dateTimeBetween('-2 years', '-1 month') : null,
+                'created_at' => Carbon::now()
             ]);
         }
 
@@ -33,10 +36,12 @@ class EmployeeSeeder extends Seeder
         foreach (range(1, 50) as $index) {
             DB::table('employees')->insert([
                 'name' => $faker->name,
-                'position' => 'manager',
-                'superior' => $managerIds[array_rand($managerIds)],
+                'position' => 'associate',
+                'superior_id' => $managerIds[array_rand($managerIds)],
                 'start_date' => $faker->dateTimeBetween('-10 years', '-5 year'),
-                'end_date' => random_int(0, 1) == 1 ? $faker->dateTimeBetween('-2 years', '-1 month') : null
+                'end_date' => random_int(0, 1) == 1 ?
+                    $faker->dateTimeBetween('-2 years', '-1 month') : null,
+                'created_at' => Carbon::now()
             ]);
         }
 
