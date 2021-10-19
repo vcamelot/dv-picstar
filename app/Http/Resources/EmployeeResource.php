@@ -19,7 +19,7 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'position' => $this->position,
-            'superior' => $this->manager,
+            'superior' => new EmployeeResource($this->manager),
             'start_date' => $this->start_date,
             'end_date' => $this->end_date
         ];

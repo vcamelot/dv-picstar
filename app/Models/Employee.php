@@ -15,6 +15,6 @@ class Employee extends Model
 
 
     public function manager() {
-        return $this->hasOne(Employee::class, 'id', 'superior');
+        return $this->hasOne(Employee::class, 'id', 'superior_id');
     }
 }
