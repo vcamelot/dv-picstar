@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+
+    public function show() {
+        return $this->with('superior');
+    }
+
+
+    public function manager() {
+        return $this->hasOne(Employee::class, 'id', 'superior');
+    }
 }

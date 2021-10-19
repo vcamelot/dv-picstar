@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class EmployeeResource extends JsonResource
 {
+
     /**
      * Transform the resource into an array.
      *
@@ -18,7 +19,7 @@ class EmployeeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'position' => $this->position,
-            'superior' => $this->superior,
+            'superior' => $this->manager,
             'start_date' => $this->start_date,
             'end_date' => $this->end_date
         ];
