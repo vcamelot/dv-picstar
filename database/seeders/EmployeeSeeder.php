@@ -29,7 +29,6 @@ class EmployeeSeeder extends Seeder
         }
 
         $managerIds = Employee::latest()->take(5)->get()->pluck('id')->toArray();
-        var_dump($managerIds);
 
         foreach (range(1, 50) as $index) {
             DB::table('employees')->insert([
