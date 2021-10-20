@@ -1,0 +1,259 @@
+openapi: '3.0.0'
+info:
+  version: '0.1'
+  title: 'Picstar Test API'
+  description: 'Picstar Test API'
+
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        position:
+          type: string
+        superior:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            position:
+              type: string
+            superior:
+              type: object
+            start_date:
+              type: string
+            end_date:
+              type: string
+        start_date:
+          type: string
+        end_date:
+          type: string
+
+
+
+paths:
+  /employees:
+    get:
+      description: Show employee list
+      responses:
+        200:
+          description: Successful response
+  /employees/{ID}:
+    parameters:
+      - in: path
+        name: ID
+        schema:
+          type: string
+        description: the employee ID
+        required: true
+    get:
+      description: Show employee by ID
+      responses:
+        '200':
+          description: Employee data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Successful response
+                  data:
+                    $ref: '#/components/schemas/Employee'
+        '404':
+          description: Invalid ID
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  data:
+                    type: string
+    put:
+      summary: Update an employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - position
+                - start_date
+              properties:
+                name:
+                  type: string
+                position:
+                  type: string
+                superior_id:
+                  type: integer
+                start_date:
+                  type: string
+                end_date:
+                  type: string
+      responses:
+        '200':
+          description: Employee updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Successful response
+                  data:
+                    $ref: '#/components/schemas/Employee'
+        '404':
+          description: Error validating data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  data:
+                    type: string
+    delete:
+      summary: Delete an employee
+      responses:
+        '204':
+          description: Employee deleted
+
+  /employees/{ID}/children:
+    get:
+      description: Show all children of an employee at managerial position
+      parameters:
+        - in: path
+          name: ID
+          schema:
+            type: string
+          description: the employee ID
+          required: true
+      responses:
+        '200':
+          description: Employee data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Successful response
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        '404':
+          description: Invalid ID or employee is not a manager
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  data:
+                    type: string
+
+  /employees/search:
+    get:
+      description: Show all employees at specific position
+      parameters:
+        - in: query
+          name: position
+          schema:
+            type: string
+          description: the position name
+          required: true
+      responses:
+        '200':
+          description: Employee data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Successful response
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        '404':
+          description: No matching employees found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  data:
+                    type: string
+  /employees/create:
+    post:
+      summary: Add new employee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - position
+                - start_date
+              properties:
+                name:
+                  type: string
+                position:
+                  type: string
+                superior_id:
+                  type: integer
+                start_date:
+                  type: string
+                end_date:
+                  type: string
+      responses:
+        '201':
+          description: Employee created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Successful response
+                  data:
+                    $ref: '#/components/schemas/Employee'
+        '404':
+          description: Error validating data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    description: Error message
+                  data:
+                    type: string
