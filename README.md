@@ -1,4 +1,29 @@
-## Brief
+# Requirements
+
+Create a small PHP service that exposes a RESTful API over CRUD operations on a model.
+
+Given the `employee` model, containing:
+
+`name`
+
+`position`
+
+`superior` - the link to another employee with a management position
+
+`startDate`
+
+`endDate`
+
+### We need to be able to:
+
+1. Save, update, delete and read an employee
+2. Find all the child employees of a parent employee with a management position
+3. Find all employees, filtered by a specific position
+4. Make sure that the above requirements are tested properly both with negative and positive scenarios
+5. Have a docker image that can run the service
+6. Have a docker compose that can run all the dependencies that the service requires in order to work(I.E a database)
+
+# Solution
 
 A test application written in Laravel 8, PHP 8, utilized MySQL 5, and PHPUnit. Wrapped in Docker container.
 
