@@ -2,6 +2,7 @@ install: copy-files build
 
 copy-files:
 	cp .env.example .env
+	cp .env.example .env.testing
 
 build:
 	docker-compose up -d --build
@@ -15,5 +16,5 @@ post-install:
 seed:
 	docker-compose exec app php artisan db:seed --class=EmployeeSeeder
 
-test-unit:
-	docker-compose run --rm app composer test:unit
+test:
+	 docker-compose exec app ./vendor/bin/phpunit
